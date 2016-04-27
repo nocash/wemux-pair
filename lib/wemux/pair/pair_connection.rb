@@ -18,6 +18,16 @@ module Wemux
         port + port_offset
       end
 
+      def port_forwards
+        [
+          [3000, 3000],
+          [4000, 4000],
+          [7000, 7000],
+        ].map { |remote, local|
+          "-L #{local}:localhost:#{remote}"
+        }
+      end
+
       def ssh_options
         [
           "StrictHostKeyChecking no",
@@ -29,8 +39,7 @@ module Wemux
         system [
           "ssh",
           ssh_options,
-          "-L #{offset_port(3000)}:localhost:3000",
-          "-L #{offset_port(4000)}:localhost:4000",
+          port_forwards,
           "-p #{client_port}",
           "#{Wemux::Pair.config.pair_user}@localhost",
         ].join(" ")
