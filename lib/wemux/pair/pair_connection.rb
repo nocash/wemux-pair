@@ -22,6 +22,7 @@ module Wemux
         [
           [3000, 3000],
           [4000, 4000],
+          [5000, 5000],
           [7000, 7000],
         ].map { |remote, local|
           "-L #{local}:localhost:#{remote}"
